@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework 2 by Preston Pressoir for Computational Sound</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.8);
+            border-bottom: 1px solid #333;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        
+        .controls select {
+            background: #ffffff;
+            color: #000000;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .controls label {
+            margin-left: 12px;
+        }
+
+        .param-section {
+            margin-top: 8px;
+            padding: 6px 0;
+        }
+
+        .param-section span.param-label {
+            display: inline-block;
+            width: 130px;
+            font-size: 12px;
+        }
+
+        .param-section input[type="range"] {
+            width: 120px;
+            vertical-align: middle;
+        }
+
+        .param-section .val {
+            display: inline-block;
+            width: 45px;
+            font-size: 12px;
+            text-align: right;
+        }
+        
+        #waveCanvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            background: #0a0a0a;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="waveform">Waveform:</label>
+        <select id="waveform">
+            <option value="sine">Sine Wave</option>
+            <option value="square">Square Wave</option>
+            <option value="sawtooth">Sawtooth Wave</option>
+            <option value="triangle">Triangle Wave</option>
+        </select>
+
+        <label for="synthMode">Synth Mode:</label>
+        <select id="synthMode">
+            <option value="additive">Additive</option>
+            <option value="am">AM</option>
+            <option value="fm">FM</option>
+        </select>
+
+        <div class="param-section">
+            <span class="param-label">Attack:</span>
+            <input type="range" id="attackSlider" min="0.001" max="1" step="0.001" value="0.01">
+            <span class="val" id="attackVal">0.01</span>
+
+            <span class="param-label">Decay:</span>
+            <input type="range" id="decaySlider" min="0.01" max="1" step="0.01" value="0.08">
+            <span class="val" id="decayVal">0.08</span>
+
+            <span class="param-label">Sustain:</span>
+            <input type="range" id="sustainSlider" min="0.01" max="1" step="0.01" value="0.35">
+            <span class="val" id="sustainVal">0.35</span>
+
+            <span class="param-label">Release:</span>
+            <input type="range" id="releaseSlider" min="0.01" max="2" step="0.01" value="0.15">
+            <span class="val" id="releaseVal">0.15</span>
+        </div>
+
+        <div class="param-section" id="additiveParams">
+            <span class="param-label">Partials:</span>
+            <input type="range" id="partialsSlider" min="3" max="8" step="1" value="4">
+            <span class="val" id="partialsVal">4</span>
+        </div>
+
+        <div class="param-section" id="amParams" style="display:none">
+            <span class="param-label">AM Mod Freq:</span>
+            <input type="range" id="amFreqSlider" min="1" max="500" step="1" value="80">
+            <span class="val" id="amFreqVal">80</span>
+
+            <span class="param-label">AM Depth:</span>
+            <input type="range" id="amDepthSlider" min="0" max="1" step="0.01" value="0.5">
+            <span class="val" id="amDepthVal">0.5</span>
+        </div>
+
+        <div class="param-section" id="fmParams" style="display:none">
+            <span class="param-label">FM Mod Freq:</span>
+            <input type="range" id="fmFreqSlider" min="1" max="1000" step="1" value="200">
+            <span class="val" id="fmFreqVal">200</span>
+
+            <span class="param-label">FM Mod Index:</span>
+            <input type="range" id="fmIndexSlider" min="0" max="500" step="1" value="100">
+            <span class="val" id="fmIndexVal">100</span>
+        </div>
+
+        <div class="param-section">
+            <span class="param-label">LFO Rate:</span>
+            <input type="range" id="lfoRateSlider" min="0.1" max="20" step="0.1" value="5">
+            <span class="val" id="lfoRateVal">5</span>
+
+            <span class="param-label">LFO Depth:</span>
+            <input type="range" id="lfoDepthSlider" min="0" max="50" step="1" value="10">
+            <span class="val" id="lfoDepthVal">10</span>
+        </div>
+    </div>
+    <canvas id="waveCanvas"></canvas>
+</body>
+<script type="module" src="main.js"></script>
+</html>
