@@ -34,7 +34,6 @@ function resizeCanvas() {
     canvas.style.height = rect.height + 'px';
 }
 
-// Map frequency to color (hue-based)
 function frequencyToColor(freq) {
     const minFreq = 260;
     const maxFreq = 990;
@@ -43,12 +42,10 @@ function frequencyToColor(freq) {
     return `hsl(${hue}, 85%, 60%)`;
 }
 
-// Get next available lane
 function getNextLane() {
     return availableLanes.length > 0 ? availableLanes.shift() : Math.floor(Math.random() * 8);
 }
 
-// Return lane to pool
 function returnLane(lane) {
     if (!availableLanes.includes(lane)) {
         availableLanes.push(lane);
@@ -56,7 +53,6 @@ function returnLane(lane) {
     }
 }
 
-// Create visual note (call this when playNote is called)
 export function createVisualNote(key, freq) {
     visualNotes[key] = {
         freq: freq,
@@ -69,7 +65,6 @@ export function createVisualNote(key, freq) {
     };
 }
 
-// Mark note as releasing (call this in keyUp)
 export function releaseVisualNote(key) {
     if (visualNotes[key]) {
         visualNotes[key].state = 'release';
@@ -77,7 +72,6 @@ export function releaseVisualNote(key) {
     }
 }
 
-// Remove visual note (call this when osc.onended fires)
 export function removeVisualNote(key) {
     if (visualNotes[key]) {
         returnLane(visualNotes[key].lane);
@@ -85,7 +79,6 @@ export function removeVisualNote(key) {
     }
 }
 
-// Animation loop
 export function startAnimation() {
     function animate() {
         animationFrameId = requestAnimationFrame(animate);
@@ -100,7 +93,6 @@ export function stopAnimation() {
     }
 }
 
-// Draw all waves
 function drawWaves() {
     const rect = canvas.getBoundingClientRect();
     const width = rect.width;
